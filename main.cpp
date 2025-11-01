@@ -25,6 +25,15 @@ int main(int argc, char **argv) {
         for (int i = 9, j = 0; j < 10; i--, j++) {
             matrix[i][j] = j;
         }
+
+        for (std::size_t i = 1; i < 9; i++) {
+            for (std::size_t j = 1; j < 9; j++) {
+                matrix.printElement({i, j});
+                std::cout << " ";
+            }
+            std::cout << std::endl;
+        }
+        
     }
     else if (dim == 3) {
         matrix[1][2][3] = 100;

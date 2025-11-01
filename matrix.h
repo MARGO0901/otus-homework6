@@ -73,6 +73,12 @@ public:
         }
     }
 
+    void printElement(const std::vector<std::size_t> &index) {
+        auto it = value_.find(index);
+        T val = (it != value_.end()) ? it->second : V;
+        std::cout << val;
+    }
+
 private:
     std::unordered_map<std::vector<std::size_t>, T, VectorHash> value_;
     std::size_t dimension_ = 2;
