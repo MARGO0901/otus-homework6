@@ -21,8 +21,10 @@ jobs:
         run: find . -name "*.cpp" -o -name "*.h" -o -name "CMakeLists.txt"
         
       - run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
+      
       - name: Configure CMake
-      - run: cmake . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON
+        run: cmake . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON
+        
       - name: Build project
         run: cmake --build . --verbose  # ДОБАВЬТЕ --verbose
         
