@@ -7,7 +7,7 @@ project(matrix VERSION ${PROJECT_VESRION})
 
 option(WITH_BOOST_TEST "Whether to build Boost test" ON)
 
-add_executable(matrix main.cpp)
+add_executable(matrix main.cpp matrix.h)
 
 set_target_properties(matrix PROPERTIES
     CXX_STANDARD 17
