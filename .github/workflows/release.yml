@@ -26,16 +26,35 @@ jobs:
         run: cmake . -DPATCH_VERSION=${{ github.run_number }} -DWITH_BOOST_TEST=ON
         
       - name: Build project
-        run: cmake --build . --verbose  # ДОБАВЬТЕ --verbose
+        run: cmake --build . --verbose 
         
       - name: Check if binary exists
         run: find . -name "matrix" -type f -executable || echo "Binary not found"
       
       - name: Run tests
         run: cmake --build . --target test
-        
+
+      - name: Debug before packaging
+        run: |
+          echo "=== Check CMake install targets ==="
+          cmake --build . --target help | grep -i install || echo "No install targets found"
+          
+          echo "=== Check CPack configuration ==="
+          find . -name "CPackConfig.cmake" -o -name "CPack*.cmake" | head -5
+          
+          echo "=== Try cpack directly ==="
+          cpack --help || echo "cpack not available"
+          
+          echo "=== List all targets ==="
+          cmake --build . --target help | grep -E "(package|install|deb)" || echo "No package targets"
+              
       - name: Create package
-        run: cmake --build . --target package --verbose  # ДОБАВЬТЕ --verbose
+        run: |
+          echo "=== Trying cpack directly ==="
+          cpack -G DEB --verbose --debug || echo "cpack failed"
+          
+          echo "=== Alternative: check if we can list packages ==="
+          cpack --list-packagables || echo "Cannot list packagables"  
         
       - name: Check package files
         run: ls -la *.deb || echo "No .deb files created"
